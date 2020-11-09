@@ -15,6 +15,8 @@ const flash = require("express-flash");
 const MongoStore = require("connect-mongo")(expressSession);
 
 const database = require("./database");
+const User = require("./models/user");
+const SurveyResponse = require("./models/survey-response");
 
 const mainRouter = require("./routes/_main");
 
@@ -26,9 +28,9 @@ module.exports = async mongooseUri => {
   const app = express();
 
   // passport setup
-  // passport.use(User.createStrategy());
-  // passport.serializeUser(User.serializeUser());
-  // passport.deserializeUser(User.deserializeUser());
+  passport.use(User.createStrategy());
+  passport.serializeUser(User.serializeUser());
+  passport.deserializeUser(User.deserializeUser());
 
   // view engine setup
   app.set("views", path.join(__dirname, "views"));
