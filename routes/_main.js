@@ -8,7 +8,7 @@ const router = require("express").Router();
 const ensureLoggedIn = require("connect-ensure-login").ensureLoggedIn("/login");
 
 router.use("/", ensureLoggedIn, require("./index"));
-router.use("/users", ensureLoggedIn, require("./users"));
+router.use("/survey", ensureLoggedIn, require("./survey"));
 
 // router.use("/login", require("./login"));
 // router.use("/logout", ensureLoggedIn, require("./logout"));
