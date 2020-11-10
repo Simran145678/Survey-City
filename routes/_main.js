@@ -5,10 +5,10 @@
  */
 
 const router = require("express").Router();
-const ensureLoggedIn = require("connect-ensure-login").ensureLoggedIn("/login");
+// const ensureLoggedIn = require("connect-ensure-login").ensureLoggedIn("/login");
 
-router.use("/", ensureLoggedIn, require("./index"));
-router.use("/survey", ensureLoggedIn, require("./survey"));
+router.use("/", require("./index"));
+router.use("/survey", require("./survey"));
 
 // router.use("/login", require("./login"));
 // router.use("/logout", ensureLoggedIn, require("./logout"));
