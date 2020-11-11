@@ -1,0 +1,43 @@
+<!-- header.ejs -->
+<!-- main_nav.ejs -->
+
+  <!--Main Content-->
+  <main class="container">
+    <div class="row">
+        <div class="offset-md col-md-4">
+            <h1><%= title %></h1>
+            <a href="/survey-list/add" class="btn btn-primary" role="button">
+            <i class="fas fa-plus-plus"></i> Add Survey</a>
+            <br>
+            <table class="table table-bordered table-striped table-hover">
+                <!-- Header Row-->
+                <tr class="d-flex">
+                    <th class="text-center">Title</th>
+                    <th>Description</th>
+                    <th class="text-center"></th>
+                    <th class="text-center"></th>
+                </tr>
+
+                <!-- Repeatable Template Row -->
+
+                <% for(let count = 0; count < SurveyList.length; count++){ %>
+                    <tr class="d-flex">
+                        <td class="text-center"><%= SurveyList[count].title %></td>
+                        <td><%= SurveyList[count].description %></td>
+                        <td class="text-center">
+                            <a href="/book-list/edit/<%=SurveyList[count]._id %>" class="btn btn-primary btn-sm">
+                            <i class="fas fa-pencil-alt"></i> Edit</a>
+                        </td>
+                        <td class="text-center">
+                            <a href="/book-list/delete/<%=SurveyList[count]._id %>" class="btn btn-danger btn-sm">
+                            <i class="fas fa-trash-alt"></i> Delete</a>
+                        </td>
+                    </tr>
+                <%  } %>
+            </table>
+        </div>
+    </div>
+  </main>
+
+<!-- bottom_nav.ejs -->
+<!-- footer.ejs -->
