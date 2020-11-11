@@ -33,6 +33,20 @@ router.post("/:id", function(req, res, next) {
 router.get("/:id/delete", function(req, res, next) {
   // TODO: implement this
   res.send("respond with a resource");
+  let id = req.params.id;
+
+ survey.remove({_id: id}, (err) => {
+    if(err)
+    {
+        console.log(err);
+        res.end(err);
+    }
+    else
+    {
+        //refresh the book list
+        res.redirect('/survey');
+    }
+ })
 });
 
 module.exports = router;
