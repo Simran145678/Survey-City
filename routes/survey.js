@@ -43,7 +43,7 @@ router.get("/:id/delete", function(req, res, next) {
     }
     else
     {
-        //refresh the book list
+        //refresh the Survey list
         res.redirect('/survey');
     }
  })
