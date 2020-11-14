@@ -21,7 +21,7 @@ const SurveyResponse = require("./models/survey-response");
 const mainRouter = require("./routes/_main");
 
 // return a factory function
-module.exports = async mongooseUri => {
+module.exports = async (mongooseUri) => {
   await database.connect(mongooseUri);
 
   // http app setup
@@ -41,30 +41,33 @@ module.exports = async mongooseUri => {
   app.use(express.json());
   app.use(express.urlencoded({ extended: false }));
   app.use(cookieParser());
-  app.use(expressSession({
-    secret: process.env.SESSION_SECRET || "It's a plane in the sky!",
-    saveUninitialized: false,
-    resave: true,
-    store: new MongoStore({
-      mongooseConnection: database.connection,
-      ttl: 7 * 24 * 60 * 60,
-      touchAfter: 24 * 60 * 60,
-    }),
-  }));
+  app.use(
+    expressSession({
+      secret: process.env.SESSION_SECRET || "It's a plane in the sky!",
+      saveUninitialized: false,
+      resave: true,
+      store: new MongoStore({
+        mongooseConnection: database.connection,
+        ttl: 7 * 24 * 60 * 60,
+        touchAfter: 24 * 60 * 60,
+      }),
+    })
+  );
   app.use(flash());
   app.use(passport.initialize());
   app.use(passport.session());
   app.use(express.static(path.join(__dirname, "public")));
+  app.use(express.static(path.join(__dirname, "node_modules")));
 
   app.use("/", mainRouter);
 
   // catch 404 and forward to error handler
-  app.use(function(req, res, next) {
+  app.use(function (req, res, next) {
     next(createError(404));
   });
 
   // error handler
-  app.use(function(err, req, res, next) {
+  app.use(function (err, req, res, next) {
     // set locals, only providing error in development
     res.locals.message = err.message;
     res.locals.error = req.app.get("env") === "development" ? err : {};
