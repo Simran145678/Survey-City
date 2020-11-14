@@ -7,6 +7,8 @@
     "watch-server": "nodemon -r dotenv/config ./bin/www"
   },
   "dependencies": {
+    "@fortawesome/fontawesome": "^1.1.8",
+    "bootstrap": "^4.5.3",
     "connect-ensure-login": "^0.1.1",
     "connect-mongo": "^3.2.0",
     "cookie-parser": "~1.4.4",
@@ -16,11 +18,13 @@
     "express-flash": "0.0.2",
     "express-session": "^1.17.1",
     "http-errors": "~1.6.3",
+    "jquery": "^3.5.1",
     "mongodb": "^3.6.3",
     "mongoose": "^5.10.13",
     "morgan": "~1.9.1",
     "passport": "^0.4.1",
-    "passport-local-mongoose": "^6.0.1"
+    "passport-local-mongoose": "^6.0.1",
+    "popper.js": "^1.16.1"
   },
   "devDependencies": {
     "dotenv": "^8.2.0"
