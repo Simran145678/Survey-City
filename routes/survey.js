@@ -76,6 +76,7 @@ router.get("/:id/delete", async function (req, res) {
   await SurveyQuestion.remove({ _id: { $in: survey.questions } }).exec();
   await Survey.remove({ _id: id }).exec();
 
+  req.flash("success", "Survey deleted successfully.");
   res.redirect("/survey");
 });
 

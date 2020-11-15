@@ -2,6 +2,12 @@
 
 <h1><%= title %></h1>
 
+<% if (messages.success) { %>
+  <div class="alert alert-success my-3">
+    <%= messages.success %>
+  </div>
+<% } %>
+
 <a href="/survey/add" class="btn btn-primary mb-3 d-inline-block" role="button">
   <i class="fas fa-plus"></i> &nbsp;Add Survey
 </a>
