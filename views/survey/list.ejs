@@ -11,23 +11,25 @@
     <tr>
       <th style="width: 33%;">Title</th>
       <th>Description</th>
-      <th style="width: 0;"></th>
-      <th style="width: 0;"></th>
+      <th style="width: 1px;"></th>
+      <th style="width: 1px;"></th>
     </tr>
   </thead>
 
   <tbody>
     <% for (let i = 0; i < surveys.length; i++) { %>
       <tr>
-        <td><%= surveys[i].title %></td>
-        <td><%= surveys[i].description %></td>
+        <td class="align-middle"><%= surveys[i].title %></td>
+        <td class="align-middle"><%= surveys[i].description %></td>
         <td>
-          <a href="/survey/<%= surveys[i]._id %>" class="btn btn-primary btn-sm">
-          <i class="fas fa-pencil-alt"></i>&nbsp;Edit</a>
+          <a href="/survey/<%= surveys[i]._id %>" class="btn btn-primary btn-sm text-nowrap">
+            <i class="fas fa-pencil-alt"></i>&nbsp;Edit
+          </a>
         </td>
         <td>
-          <a href="/survey/<%= surveys[i]._id %>/delete" class="btn btn-danger btn-sm">
-          <i class="fas fa-trash-alt"></i>&nbsp;Delete</a>
+          <a href="/survey/<%= surveys[i]._id %>/delete" class="btn btn-danger btn-sm text-nowrap require-confirmation">
+            <i class="fas fa-trash-alt"></i>&nbsp;Delete
+          </a>
         </td>
       </tr>
     <% } %>

@@ -31,6 +31,8 @@
     };
     %>
 
+    <h5>Question <%= i + 1 %></h5>
+
     <div class="mb-3">
       <div class="form-group">
         <label for="title-<%= q._id %>">Title:</label>
@@ -54,6 +56,7 @@
     </div>
     <hr class="my-3">
   <% } %>
+
   <div class="small">
     <i>Save the survey to add another question. To remove a question, empty the question's title.</i>
   </div>
