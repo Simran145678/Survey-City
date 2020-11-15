@@ -1,43 +1,37 @@
-<!-- header.ejs -->
-<!-- main_nav.ejs -->
+<%- include ../layout/header %>
 
-  <!--Main Content-->
-  <main class="container">
-    <div class="row">
-        <div class="offset-md col-md-4">
-            <h1><%= title %></h1>
-            <a href="/survey-list/add" class="btn btn-primary" role="button">
-            <i class="fas fa-plus-plus"></i> Add Survey</a>
-            <br>
-            <table class="table table-bordered table-striped table-hover">
-                <!-- Header Row-->
-                <tr class="d-flex">
-                    <th class="text-center">Title</th>
-                    <th>Description</th>
-                    <th class="text-center"></th>
-                    <th class="text-center"></th>
-                </tr>
+<h1><%= title %></h1>
 
-                <!-- Repeatable Template Row -->
+<a href="/survey-list/add" class="btn btn-primary mb-3 d-inline-block" role="button">
+  <i class="fas fa-plus"></i> &nbsp;Add Survey
+</a>
 
-                <% for(let count = 0; count < SurveyList.length; count++){ %>
-                    <tr class="d-flex">
-                        <td class="text-center"><%= SurveyList[count].title %></td>
-                        <td><%= SurveyList[count].description %></td>
-                        <td class="text-center">
-                            <a href="/book-list/edit/<%=SurveyList[count]._id %>" class="btn btn-primary btn-sm">
-                            <i class="fas fa-pencil-alt"></i> Edit</a>
-                        </td>
-                        <td class="text-center">
-                            <a href="/book-list/delete/<%=SurveyList[count]._id %>" class="btn btn-danger btn-sm">
-                            <i class="fas fa-trash-alt"></i> Delete</a>
-                        </td>
-                    </tr>
-                <%  } %>
-            </table>
-        </div>
-    </div>
-  </main>
+<table class="table table-striped table-hover" style="width: 100%;">
+  <thead>
+    <tr>
+      <th style="width: 33%;">Title</th>
+      <th>Description</th>
+      <th style="width: 0;"></th>
+      <th style="width: 0;"></th>
+    </tr>
+  </thead>
 
-<!-- bottom_nav.ejs -->
-<!-- footer.ejs -->
+  <tbody>
+    <% for (let i = 0; i < surveys.length; i++) { %>
+      <tr class="d-flex">
+        <td><%= surveys[i].title %></td>
+        <td><%= surveys[i].description %></td>
+        <td>
+          <a href="/survey/<%= surveys[i]._id %>" class="btn btn-primary btn-sm">
+          <i class="fas fa-pencil-alt"></i>&nbsp;Edit</a>
+        </td>
+        <td>
+          <a href="/survey/<%= surveys[i]._id %>/delete" class="btn btn-danger btn-sm">
+          <i class="fas fa-trash-alt"></i>&nbsp;Delete</a>
+        </td>
+      </tr>
+    <% } %>
+  </tbody>
+</table>
+
+<%- include ../layout/footer %>
