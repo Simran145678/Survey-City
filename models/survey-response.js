@@ -20,14 +20,6 @@ const SurveyResponse = new mongoose.Schema({
     ref: Survey.modelName,
     required: true,
   },
-  title: {
-    type: String,
-    required: true,
-  },
-  description: {
-    type: String,
-    required: true,
-  },
   answers: {
     type: [SurveyQuestionAnswer],
     required: true,

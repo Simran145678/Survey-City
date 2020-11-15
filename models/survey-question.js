@@ -14,6 +14,4 @@ const SurveyQuestion = new mongoose.Schema({
   includeOther: Boolean, // Only used for radio or checkbox types
 });
 
-SurveyQuestion.index({ survey: 1 });
-
 module.exports = mongoose.model("SurveyQuestion", SurveyQuestion);
