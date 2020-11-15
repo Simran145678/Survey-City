@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 const Survey = require("../models/survey");
+const SurveyQuestion = require("../models/survey-question");
 
 router.get("/", function (req, res) {
   Survey.find((err, survey) => {
@@ -35,55 +36,103 @@ router.get("/:id", function (req, res) {
       survey,
       isNew: false,
     });
-  });
+  }).populate("questions");
 });
 
 router.post("/:id", function (req, res) {
   const { id } = req.params;
 
+  //console.log(req.body);
+  //return res.redirect("/survey/" + id);
+
   if (id === "add") {
-    console.log("Add!", req.body);
-    Survey.create({
-      title: req.body.title,
-      description: req.body.description,
-    }, (err, survey) => {
-      console.log(err, survey);
+    const questions = mapBodyToSurveyQuestions(req.body);
+    SurveyQuestion.insertMany(questions, (err, quests) => {
       if (err)
         throw err;
 
-      // TODO: questions
+      Survey.create({
+        title: req.body.title,
+        description: req.body.description,
+        questions: quests.map(q => q._id),
+      }, (err, survey) => {
+        if (err)
+          throw err;
 
-      res.redirect("/survey");
+        req.flash("success", "Survey saved successfully!");
+        res.redirect("/survey/" + survey._id);
+      });
     });
 
     return;
   }
 
-  Survey.updateOne({ _id: id }, {
-    _id: id,
-    title: req.body.title,
-    description: req.body.description,
-  }, err => {
+  Survey.findById(id, (err, survey) => {
     if (err)
       throw err;
 
-    // TODO: questions
+    SurveyQuestion.remove({ _id: { $in: survey.questions } }, err => {
+      if (err)
+        throw err;
 
-    res.redirect("/survey");
+      const questions = mapBodyToSurveyQuestions(req.body);
+      SurveyQuestion.insertMany(questions, (err, quests) => {
+        if (err)
+          throw err;
+
+        Survey.updateOne({ _id: id }, {
+          _id: id,
+          title: req.body.title,
+          description: req.body.description,
+          questions: quests.map(q => q._id),
+        }, err => {
+          if (err)
+            throw err;
+
+          req.flash("success", "Survey saved successfully!");
+          res.redirect("/survey/" + id);
+        });
+      });
+    });
   });
 });
 
 router.get("/:id/delete", function (req, res) {
-  const id = req.params.id;
+  const { id } = req.params;
 
-  // TODO: questions
-
-  Survey.remove({ _id: id }, err => {
+  Survey.findById(id, (err, survey) => {
     if (err)
       throw err;
 
-    res.redirect("/survey");
+    SurveyQuestion.remove({ _id: { $in: survey.questions } }, err => {
+      if (err)
+        throw err;
+
+      Survey.remove({ _id: id }, err => {
+        if (err)
+          throw err;
+
+        res.redirect("/survey");
+      });
+    });
   });
 });
 
 module.exports = router;
+
+function mapBodyToSurveyQuestions(body) {
+  const questions = [];
+
+  for (let i = 0; i < body.question_title.length; i++) {
+    if (!body.question_title[i].trim())
+      continue;
+
+    questions.push(new SurveyQuestion({
+      question: body.question_title[i].trim(),
+      type: body.question_type[i],
+      options: body.question_options[i].split(";").map(x => x.trim()),
+    }));
+  }
+
+  return questions;
+}

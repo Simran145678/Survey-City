@@ -16,7 +16,6 @@ const MongoStore = require("connect-mongo")(expressSession);
 
 const database = require("./database");
 const User = require("./models/user");
-const SurveyResponse = require("./models/survey-response");
 
 const mainRouter = require("./routes/_main");
 
@@ -39,7 +38,7 @@ module.exports = async (mongooseUri) => {
   // other middleware setup
   app.use(logger("dev"));
   app.use(express.json());
-  app.use(express.urlencoded({ extended: false }));
+  app.use(express.urlencoded({ extended: true }));
   app.use(cookieParser());
   app.use(
     expressSession({
