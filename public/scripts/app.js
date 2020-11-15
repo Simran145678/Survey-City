@@ -1,3 +1,9 @@
+/*
+ * app.js
+ * SurveyCity
+ * 2020-11-09
+ */
+
 (function () {
   function start() {
     [...document.querySelectorAll(".require-confirmation")].forEach(el => {
