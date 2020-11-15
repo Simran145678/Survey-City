@@ -10,15 +10,12 @@ const router = express.Router();
 const Survey = require("../models/survey");
 const SurveyQuestion = require("../models/survey-question");
 
-router.get("/", function (req, res) {
-  Survey.find((err, survey) => {
-    if (err)
-      throw err;
+router.get("/", async function (req, res) {
+  const surveys = await Survey.find({}).sort({ title: 1 }).exec();
 
-    res.render("survey/list", {
-      title: "Survey List",
-      surveys: survey
-    });
+  res.render("survey/list", {
+    title: "Survey List",
+    surveys,
   });
 });
 
@@ -30,98 +27,56 @@ router.get("/add", function (req, res) {
   });
 });
 
-router.get("/:id", function (req, res) {
+router.get("/:id", async function (req, res) {
   const { id } = req.params;
 
-  Survey.findById(id, (err, survey) => {
-    if (err)
-      throw err;
-
-    res.render("survey/edit", {
-      title: "Edit Survey - SurveyCity",
-      survey,
-      isNew: false,
-    });
-  }).populate("questions");
+  const survey = await Survey.findById(id).populate("questions").exec();
+  res.render("survey/edit", {
+    title: "Edit Survey - SurveyCity",
+    survey,
+    isNew: false,
+  });
 });
 
-router.post("/:id", function (req, res) {
+router.post("/:id", async function (req, res) {
   const { id } = req.params;
 
-  //console.log(req.body);
-  //return res.redirect("/survey/" + id);
+  const questions = mapBodyToSurveyQuestions(req.body);
 
   if (id === "add") {
-    const questions = mapBodyToSurveyQuestions(req.body);
-    SurveyQuestion.insertMany(questions, (err, quests) => {
-      if (err)
-        throw err;
-
-      Survey.create({
-        title: req.body.title,
-        description: req.body.description,
-        questions: quests.map(q => q._id),
-      }, (err, survey) => {
-        if (err)
-          throw err;
-
-        req.flash("success", "Survey saved successfully!");
-        res.redirect("/survey/" + survey._id);
-      });
+    const quests = await SurveyQuestion.insertMany(questions);
+    const survey = await Survey.create({
+      title: req.body.title,
+      description: req.body.description,
+      questions: quests.map(q => q._id),
     });
 
-    return;
+    req.flash("success", "Survey saved successfully!");
+    return res.redirect("/survey/" + survey._id);
   }
 
-  Survey.findById(id, (err, survey) => {
-    if (err)
-      throw err;
+  const survey = await Survey.findById(id).exec();
+  await SurveyQuestion.remove({ _id: { $in: survey.questions } }).exec();
+  const quests = await SurveyQuestion.insertMany(questions);
+  await Survey.updateOne({ _id: id }, {
+    _id: id,
+    title: req.body.title,
+    description: req.body.description,
+    questions: quests.map(q => q._id),
+  }).exec();
 
-    SurveyQuestion.remove({ _id: { $in: survey.questions } }, err => {
-      if (err)
-        throw err;
-
-      const questions = mapBodyToSurveyQuestions(req.body);
-      SurveyQuestion.insertMany(questions, (err, quests) => {
-        if (err)
-          throw err;
-
-        Survey.updateOne({ _id: id }, {
-          _id: id,
-          title: req.body.title,
-          description: req.body.description,
-          questions: quests.map(q => q._id),
-        }, err => {
-          if (err)
-            throw err;
-
-          req.flash("success", "Survey saved successfully!");
-          res.redirect("/survey/" + id);
-        });
-      });
-    });
-  });
+  req.flash("success", "Survey saved successfully!");
+  res.redirect("/survey/" + id);
 });
 
-router.get("/:id/delete", function (req, res) {
+router.get("/:id/delete", async function (req, res) {
   const { id } = req.params;
 
-  Survey.findById(id, (err, survey) => {
-    if (err)
-      throw err;
+  const survey = await Survey.findById(id).exec();
+  await SurveyQuestion.remove({ _id: { $in: survey.questions } }).exec();
+  await Survey.remove({ _id: id }).exec();
 
-    SurveyQuestion.remove({ _id: { $in: survey.questions } }, err => {
-      if (err)
-        throw err;
-
-      Survey.remove({ _id: id }, err => {
-        if (err)
-          throw err;
-
-        res.redirect("/survey");
-      });
-    });
-  });
+  res.redirect("/survey");
 });
 
 module.exports = router;
