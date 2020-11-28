@@ -43,14 +43,17 @@
         <% } %>
           <a class="nav-link" href=""  style="color:burlywood"><i class="fas fa-sign-in-alt"></i></i> Login</a>
         </li>
+        
 
-        <% if (title && title.includes("Logout ")) { %>
-          <li class="nav-item active">
-        <% } else  { %>
-          <li class="nav-item">
+        <!---->
+         <% if(typeof displayName == 'string' && displayName) { %>
+          <li class="navbar-text"><i class="fas fa-lg fa-user"></i> Welcome, <%= displayName %></li>
+          <li class="nav-item"><a href="" class="nav-link" style="color:burlywood">
+            <i class="fas fa-lg fa-sign-out-alt"></i> Logout</a></li>
+        <% } else { %>
+          <li class="nav-item"><a href="" class="nav-link" style="color:burlywood">
+            <i class="fas fa-lg fa-sign-in-alt"></i> Login</a></li>
         <% } %>
-          <a class="nav-link" href=""  style="color:burlywood"><i class="fas fa-sign-out-alt"></i></i> Logout</a>
-        </li>
 
         
         
