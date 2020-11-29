@@ -19,6 +19,7 @@
       <th>Description</th>
       <th style="width: 1px;"></th>
       <th style="width: 1px;"></th>
+      <th style="width: 1px;"></th>
     </tr>
   </thead>
 
@@ -27,6 +28,11 @@
       <tr>
         <td class="align-middle"><%= surveys[i].title %></td>
         <td class="align-middle"><%= surveys[i].description %></td>
+        <td>
+          <a data-copy="https://survey-city.herokuapp.com/answer/<%= surveys[i]._id %>" class="btn btn-secondary btn-sm text-nowrap">
+            <i class="fas fa-copy"></i>&nbsp;Copy link
+          </a>
+        </td>
         <td>
           <a href="/survey/<%= surveys[i]._id %>" class="btn btn-primary btn-sm text-nowrap">
             <i class="fas fa-pencil-alt"></i>&nbsp;Edit
