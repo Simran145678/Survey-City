@@ -5,14 +5,14 @@
  */
 
 const router = require("express").Router();
-// const ensureLoggedIn = require("connect-ensure-login").ensureLoggedIn("/login");
+const ensureLoggedIn = require("connect-ensure-login").ensureLoggedIn("/login");
 
 router.use("/", require("./index"));
-router.use("/survey", require("./survey"));
+router.use("/survey", ensureLoggedIn, require("./survey"));
 router.use("/answer", require("./answer"));
 
 router.use("/register", require("./register"));
 router.use("/login", require("./login"));
-router.get("/logout", require("./logout"));
+router.get("/logout", ensureLoggedIn, require("./logout"));
 
 module.exports = router;
