@@ -8,6 +8,12 @@
   </div>
 <% } %>
 
+<% if (responseCount > 0) { %>
+  <div class="alert alert-warning">
+    <strong>Warning: </strong> changing the survey will invalidate all <%= responseCount %> response(s) to this survey.
+  </div>
+<% } %>
+
 <form method="POST" class="form">
   <div class="form-group">
     <label for="title">Title:</label>

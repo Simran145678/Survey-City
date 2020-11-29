@@ -9,6 +9,7 @@ const router = express.Router();
 
 const Survey = require("../models/survey");
 const SurveyQuestion = require("../models/survey-question");
+const SurveyResponse = require("../models/survey-response");
 
 router.get("/", async function (req, res) {
   const surveys = await Survey.find({}).sort({ title: 1 }).exec();
@@ -31,10 +32,13 @@ router.get("/:id", async function (req, res) {
   const { id } = req.params;
 
   const survey = await Survey.findById(id).populate("questions").exec();
+  const responseCount = await SurveyResponse.count({ survey: survey._id }).exec();
+
   res.render("survey/edit", {
     title: "Edit Survey - SurveyCity",
     survey,
     isNew: false,
+    responseCount,
   });
 });
 
@@ -56,6 +60,7 @@ router.post("/:id", async function (req, res) {
   }
 
   const survey = await Survey.findById(id).exec();
+  await SurveyResponse.remove({ survey: survey._id }).exec(); // Invalidate responses
   await SurveyQuestion.remove({ _id: { $in: survey.questions } }).exec();
   const quests = await SurveyQuestion.insertMany(questions);
   await Survey.updateOne({ _id: id }, {

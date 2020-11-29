@@ -9,9 +9,10 @@ const router = require("express").Router();
 
 router.use("/", require("./index"));
 router.use("/survey", require("./survey"));
+router.use("/answer", require("./answer"));
 
-// router.use("/login", require("./login"));
-// router.use("/logout", ensureLoggedIn, require("./logout"));
-// router.use("/register", require("./register"));
+//router.use("/login", require("./login"));
+//router.use("/logout", ensureLoggedIn, require("./logout"));
+//router.use("/register", require("./register"));
 
 module.exports = router;

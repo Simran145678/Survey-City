@@ -12,8 +12,8 @@
   </head>
   <body>
     <!-- Main Navigation -->
-    <nav class="navbar fixed-top navbar-expand-xl navbar-dark" style="background-color: brown;"id="header">
-      <a class="navbar-brand" href="/"><i class="fas fa-poll"></i> Survey City</a>
+    <nav class="navbar fixed-top navbar-expand-xl navbar-dark" style="background-color: rgb(190, 255, 250); "id="header">
+      <a class="navbar-brand" href="/"  style="color:burlywood"><i class="fas fa-poll"></i> Survey City</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -25,26 +25,39 @@
         <% } else { %>
           <li class="nav-item">
         <% } %>
-          <a class="nav-link" href="/"><i class="fas fa-lg fa-laptop-house"></i> Home</a>
+          <a class="nav-link" href="/" style="color:burlywood"><i class="fas fa-lg fa-laptop-house"></i> Home</a>
         </li>
 
-        <% if (title && title.includes("Survey ")) { %>
+          <% if (title && title.includes("List")) { %>
           <li class="nav-item active">
         <% } else  { %>
           <li class="nav-item">
         <% } %>
-          <a class="nav-link" href="/survey"><i class="fas fa-user-circle"></i> Surveys</a>
+          <a class="nav-link" href=""  style="color:burlywood"><i class="fas fa-list"></i></i> List</a>
         </li>
 
-        <!--
-        <% if (title && title.includes("FAQ")) { %>
+        <% if (title && title.includes("Login")) { %>
           <li class="nav-item active">
         <% } else  { %>
           <li class="nav-item">
         <% } %>
-          <a class="nav-link" href=""><i class="fas fa-question-circle"></i> FAQs</a>
+          <a class="nav-link" href=""  style="color:burlywood"><i class="fas fa-sign-in-alt"></i></i> Login</a>
         </li>
-        -->
+
+        <% if (title && title.includes("Logout ")) { %>
+          <li class="nav-item active">
+        <% } else  { %>
+          <li class="nav-item">
+        <% } %>
+          <a class="nav-link" href=""  style="color:burlywood"><i class="fas fa-sign-out-alt"></i></i> Logout</a>
+        </li>
+
+        
+        
+     
+       
+
+
       </div>
     </nav>
     <br>
