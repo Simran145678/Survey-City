@@ -1,18 +1,26 @@
+/*
+ * register.js
+ * SurveyCity
+ * 2020-11-29
+ */
+
 const express = require("express");
 const router = express.Router();
 
-let passport = require("passport");
+const passport = require("passport");
 const User = require("../models/user")
 
-router.get("/", (req, res, next) => {
+router.get("/", (req, res) => {
+  if (req.user)
+    return res.redirect("/");
+
   res.render("auth/register", {
     title: "Register",
     messages: req.flash("registerMessage"),
-    fullName: req.user ? req.user.fullName : ""
   });
 });
 
-router.post("/", (req, res, next) => {
+router.post("/", (req, res) => {
   // instantiate a user object
   let newUser = new User({
     username: req.body.username,
