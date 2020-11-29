@@ -13,6 +13,6 @@ router.use("/answer", require("./answer"));
 
 router.use("/register", require("./register"));
 router.use("/login", require("./login"));
-router.get("/logout", ensureLoggedIn, require("./logout"));
+router.use("/logout", ensureLoggedIn, require("./logout"));
 
 module.exports = router;
