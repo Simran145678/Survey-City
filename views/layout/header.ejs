@@ -12,8 +12,8 @@
   </head>
   <body>
     <!-- Main Navigation -->
-    <nav class="navbar fixed-top navbar-expand-xl navbar-dark" style="background-color: rgb(190, 255, 250); "id="header">
-      <a class="navbar-brand" href="/"  style="color:burlywood"><i class="fas fa-poll"></i> Survey City</a>
+    <nav class="navbar fixed-top navbar-expand-xl navbar-dark" style="background-color: rgb(0, 110, 110); "id="header">
+      <a class="navbar-brand" href="/"  style="color:rgb(255,202,125)"><i class="fas fa-poll"></i> Survey City</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -25,33 +25,35 @@
         <% } else { %>
           <li class="nav-item">
         <% } %>
-          <a class="nav-link" href="/" style="color:burlywood"><i class="fas fa-lg fa-laptop-house"></i> Home</a>
+          <a class="nav-link" href="/" style="color:rgb(255,202,125)"><i class="fas fa-lg fa-laptop-house"></i> Home</a>
         </li>
 
-          <% if (title && title.includes("List")) { %>
+        <% if (title && title.includes("List")) { %>
           <li class="nav-item active">
         <% } else  { %>
           <li class="nav-item">
         <% } %>
-          <a class="nav-link" href=""  style="color:burlywood"><i class="fas fa-list"></i></i> List</a>
+          <a class="nav-link" href="/survey" style="color:rgb(255,202,125)"><i class="fas fa-list"></i></i> List</a>
         </li>
 
-       
+
 
         <!---->
-         <% if(typeof displayName == 'string' && displayName) { %>
+         <% if (typeof displayName === "string" && displayName) { %>
           <li class="navbar-text"><i class="fas fa-lg fa-user"></i> Welcome, <%= displayName %></li>
-          <li class="nav-item"><a href="" class="nav-link" style="color:burlywood">
+          <li class="nav-item"><a href="/logout" class="nav-link" style="color:rgb(255,202,125)">
             <i class="fas fa-lg fa-sign-out-alt"></i> Logout</a></li>
         <% } else { %>
-          <li class="nav-item"><a href="" class="nav-link" style="color:burlywood">
-            <i class="fas fa-lg fa-sign-in-alt"></i> Login</a></li>
+          <li class="nav-item"><a href="/login" class="nav-link" style="color:rgb(255,202,125)">
+            <i class="fas fa-lg fa-sign-in-alt"></i> Log in</a></li>
+          <li class="nav-item"><a href="/register" class="nav-link" style="color:rgb(255,202,125)">
+            <i class="fas fa-lg fa-sign-in-alt"></i> Sign up</a></li>
         <% } %>
 
-        
-        
-     
-       
+
+
+
+
 
 
       </div>

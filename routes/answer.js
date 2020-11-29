@@ -66,6 +66,7 @@ router.get("/:sid", findSurveyMiddleware, async (req, res) => {
 
   res.render("answer/intro", {
     title: req.survey.title + " - Answer Survey - SurveyCity",
+    displayName: req.user?.fullName,
     survey: req.survey,
   });
 });
@@ -80,6 +81,7 @@ router.get("/:sid/finish", findSurveyMiddleware, checkSessionMiddleware, functio
 
   res.render("answer/finish", {
     title: req.survey.title + " - Answer Survey - SurveyCity",
+    displayName: req.user?.fullName,
     survey: req.survey,
   });
 });
@@ -104,6 +106,7 @@ router.post("/:sid/finish", findSurveyMiddleware, checkSessionMiddleware, async 
 router.get("/:sid/done", findSurveyMiddleware, function (req, res) {
   res.render("answer/done", {
     title: `Thank you - ${req.survey.title} - Answer Survey - SurveyCity`,
+    displayName: req.user?.fullName,
     survey: req.survey,
   });
 });
@@ -115,6 +118,7 @@ router.get("/:sid/:qid", findSurveyMiddleware, findQuestionMiddleware, checkSess
 
   res.render("answer/question", {
     title: req.survey.title + " - Answer Survey - SurveyCity",
+    displayName: req.user?.fullName,
     survey: req.survey,
     question: req.question,
     currentQuestionId: req.session.surveyResponse.currentQuestionId,

@@ -18,6 +18,7 @@ router.get("/", async function (req, res) {
 
   res.render("survey/list", {
     title: "Survey List",
+    displayName: req.user?.fullName,
     surveys,
   });
 });
@@ -25,6 +26,7 @@ router.get("/", async function (req, res) {
 router.get("/add", function (req, res) {
   res.render("survey/edit", {
     title: "New Survey - SurveyCity",
+    displayName: req.user?.fullName,
     survey: new Survey(),
     isNew: true,
     responseCount: 0,
@@ -40,6 +42,7 @@ router.get("/:id", async function (req, res) {
 
     res.render("survey/edit", {
       title: "Edit Survey - SurveyCity",
+      displayName: req.user?.fullName,
       survey,
       isNew: false,
       responseCount,
