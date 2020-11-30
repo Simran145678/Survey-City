@@ -6,6 +6,9 @@
     "start": "node ./bin/www",
     "watch-server": "nodemon -r dotenv/config ./bin/www"
   },
+  "engines": {
+    "node": ">=14"
+  },
   "dependencies": {
     "@fortawesome/fontawesome": "^1.1.8",
     "@fortawesome/fontawesome-free": "^5.15.1",
