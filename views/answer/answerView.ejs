@@ -1,0 +1,25 @@
+<%- include ../layout/header %>
+
+  <!--Main Content-->
+  <main class="container">
+    <div class="row">
+        <div class="offset-md col-md-4">
+            <h1><%= title %></h1>
+            <br>
+            <table class="table table-bordered table-striped table-hover">
+                <tr class="d-flex">
+                    <th class="text-center">Question</th>
+                    <th>Answer</th>
+                </tr>
+                <% for(let count = 0; count < question.length; count++){ %>
+                    <tr class="d-flex">
+                        <td class="text-center"><%= question.question[count].Question%></td>
+                        <td><%= question[count].Answer %></td>
+                    </tr>
+                <%  } %>
+            </table>
+        </div>
+    </div>
+  </main>
+
+<%- include ../layout/footer %>
