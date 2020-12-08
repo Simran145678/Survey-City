@@ -1,6 +1,6 @@
 <%- include ../layout/header %>
 
-<h1><%= title.slice(0, title.lastIndexOf(" -")) %></h1>
+<h1 style="font-family: system-ui; letter-spacing: 2px; font-variant: small-caps; font-weight: bold; color: #383e56;"><%= title.slice(0, title.lastIndexOf(" -")) %></h1>
 
 <% if (messages.success) { %>
   <div class="alert alert-success my-3">
@@ -16,16 +16,16 @@
 
 <form method="POST" class="form">
   <div class="form-group">
-    <label for="title">Title:</label>
+    <label for="title" style="font-family: system-ui; font-size: large;">Title:</label>
     <input type="text" class="form-control" id="title" name="title" value="<%= survey.title %>">
   </div>
 
   <div class="form-group">
-    <label for="title">Description:</label>
+    <label for="title" style="font-family: system-ui; font-size: large;">Description:</label>
     <textarea class="form-control" id="description" name="description"><%= survey.description %></textarea>
   </div>
 
-  <h3>Questions</h3>
+  <h3 style="font-family: system-ui; letter-spacing: 2px; font-variant: small-caps; color: #383e56;">Questions</h3>
 
   <% for (let i = 0; i <= survey.questions.length; i++) { %>
     <%
@@ -37,16 +37,16 @@
     };
     %>
 
-    <h5>Question <%= i + 1 %></h5>
+    <h5 style="font-family: system-ui; letter-spacing: 2px; font-variant: small-caps; color: #383e56;">Question <%= i + 1 %></h5>
 
     <div class="mb-3">
       <div class="form-group">
-        <label for="title-<%= q._id %>">Title:</label>
+        <label for="title-<%= q._id %>" style="font-family: system-ui; font-size: large;">Title:</label>
         <input type="text" class="form-control" id="title-<%= q._id %>" name="question_title[]" value="<%= q.question %>">
       </div>
 
       <div class="form-group">
-        <label for="type-<%= q._id %>">Type:</label>
+        <label for="type-<%= q._id %>" style="font-family: system-ui; font-size: large;">Type:</label>
         <select name="question_type[]" id="type-<%= q._id %>" class="custom-select">
           <option value="input" <%= q.type === "input" ? "selected" : "" %>>Short answer</option>
           <option value="textarea" <%= q.type === "textarea" ? "selected" : "" %>>Long answer</option>
@@ -56,7 +56,7 @@
       </div>
 
       <div class="form-group">
-        <label for="options-<%= q._id %>">Options (multiple choice only; separate different options by semicolon <kbd>;</kbd>):</label>
+        <label for="options-<%= q._id %>" style="font-family: system-ui; font-size: large;">Options (multiple choice only; separate different options by semicolon <kbd>;</kbd>):</label>
         <input type="text" class="form-control" id="options-<%= q._id %>" name="question_options[]" value="<%= q.options.join(";") %>">
       </div>
     </div>
@@ -64,7 +64,7 @@
   <% } %>
 
   <div class="small">
-    <i>Save the survey to add another question. To remove a question, empty the question's title.</i>
+    <i style="font-family: system-ui; font-size: medium;">Save the survey to add another question. To remove a question, empty the question's title.</i>
   </div>
 
   <div class="row justify-content-center mt-4">

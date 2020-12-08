@@ -12,8 +12,8 @@
   </head>
   <body>
     <!-- Main Navigation -->
-    <nav class="navbar fixed-top navbar-expand-xl navbar-dark" style="background-color: rgb(0, 110, 110); "id="header">
-      <a class="navbar-brand" href="/"  style="color:rgb(255,202,125)"><i class="fas fa-poll"></i> Survey City</a>
+    <nav class="navbar fixed-top navbar-expand-xl navbar-dark" style="background-color: #e0ece4; "id="header">
+      <a class="navbar-brand" href="/"  style="color:#aa4a30; font-family: Lucida, Console; font-weight: bold; font-size: x-large;"><i class="fas fa-poll"></i> SurveyCity</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -25,7 +25,7 @@
         <% } else { %>
           <li class="nav-item">
         <% } %>
-          <a class="nav-link" href="/" style="color:rgb(255,202,125)"><i class="fas fa-lg fa-laptop-house"></i> Home</a>
+          <a class="nav-link" href="/" style="color:#aa4a30; font-weight: bold; font-size: medium;"><i class="fas fa-lg fa-laptop-house"></i> Home</a>
         </li>
 
         <!---->
@@ -35,16 +35,16 @@
           <% } else  { %>
             <li class="nav-item" style="padding-top: 2px;">
           <% } %>
-            <a class="nav-link" href="/survey" style="color:rgb(255,202,125)"><i class="fas fa-list"></i></i> Surveys</a>
+            <a class="nav-link" href="/survey" style="color:#aa4a30; font-weight: bold; font-size: medium;"><i class="fas fa-list"></i></i> Surveys</a>
           </li>
 
-          <li class="navbar-text ml-4"><i class="fas fa-lg fa-user"></i> Welcome, <%= displayName %></li>
-          <li class="nav-item"><a href="/logout" class="nav-link" style="color:rgb(255,202,125)">
+          <li class="navbar-text ml-4" style="color:#aa4a30; font-weight: bold; font-size: medium;"><i class="fas fa-lg fa-user" ></i > Welcome, <%= displayName %> </li>
+          <li class="nav-item"><a href="/logout" class="nav-link" style="color:#aa4a30; font-weight: bold; font-size: medium;">
             <i class="fas fa-lg fa-sign-out-alt"></i> Logout</a></li>
         <% } else { %>
-          <li class="nav-item ml-4"><a href="/login" class="nav-link" style="color:rgb(255,202,125)">
+          <li class="nav-item ml-4"><a href="/login" class="nav-link" style="color:#aa4a30; font-weight: bold; font-size: medium;">
             <i class="fas fa-lg fa-sign-in-alt"></i> Log in</a></li>
-          <li class="nav-item"><a href="/register" class="nav-link" style="color:rgb(255,202,125)">
+          <li class="nav-item"><a href="/register" class="nav-link" style="color:#aa4a30; font-weight: bold; font-size: medium;">
             <i class="fas fa-lg fa-sign-in-alt"></i> Sign up</a></li>
         <% } %>
       </div>
