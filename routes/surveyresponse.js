@@ -24,7 +24,7 @@ router.get("/:surveyId", async function (req, res) {
 	}
 	
 	res.render("responses/list", {
-		title: "...",
+		title: "SurveyResponse",
 		answers: Object.values(result),
 	});
 });
