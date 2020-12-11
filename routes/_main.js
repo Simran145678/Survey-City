@@ -9,6 +9,7 @@ const ensureLoggedIn = require("connect-ensure-login").ensureLoggedIn("/login");
 
 router.use("/", require("./index"));
 router.use("/survey", ensureLoggedIn, require("./survey"));
+router.use("/responses", ensureLoggedIn, require("./responses"));
 router.use("/answer", require("./answer"));
 
 router.use("/register", require("./register"));
