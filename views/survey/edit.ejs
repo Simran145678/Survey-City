@@ -1,6 +1,6 @@
 <%- include ../layout/header %>
 
-<h1 style="font-family: system-ui; letter-spacing: 2px; font-variant: small-caps; font-weight: bold; color: #383e56;"><%= title.slice(0, title.lastIndexOf(" -")) %></h1>
+<h1 style="letter-spacing: 2px; font-variant: small-caps; font-weight: bold;"><%= title.slice(0, title.lastIndexOf(" -")) %></h1>
 
 <% if (messages.success) { %>
   <div class="alert alert-success my-3">
@@ -16,56 +16,78 @@
 
 <form method="POST" class="form">
   <div class="form-group">
-    <label for="title" style="font-family: system-ui; font-size: large;">Title:</label>
+    <label for="title" style="font-size: large;">Title:</label>
     <input type="text" class="form-control" id="title" name="title" value="<%= survey.title %>">
   </div>
 
   <div class="form-group">
-    <label for="title" style="font-family: system-ui; font-size: large;">Description:</label>
+    <label for="title" style="font-size: large;">Description:</label>
     <textarea class="form-control" id="description" name="description"><%= survey.description %></textarea>
   </div>
 
-  <h3 style="font-family: system-ui; letter-spacing: 2px; font-variant: small-caps; color: #383e56;">Questions</h3>
+  <h3 style="letter-spacing: 2px; font-variant: small-caps;">Questions</h3>
 
-  <% for (let i = 0; i <= survey.questions.length; i++) { %>
-    <%
-    const q = i < survey.questions.length ? survey.questions[i] : {
-      _id: 0,
-      title: "",
-      type: "radio",
-      options: [],
-    };
-    %>
+  <div id="question-list">
+    <% for (let i = 0; i <= survey.questions.length; i++) { %>
+      <%
+      const isQuestion = i < survey.questions.length;
+      const q = isQuestion ? survey.questions[i] : {
+        _id: 0,
+        title: "",
+        type: "radio",
+        options: [],
+      };
+      %>
 
-    <h5 style="font-family: system-ui; letter-spacing: 2px; font-variant: small-caps; color: #383e56;">Question <%= i + 1 %></h5>
+      <% if (!isQuestion) { %>
+        <template id="question-template">
+      <% } %>
 
-    <div class="mb-3">
-      <div class="form-group">
-        <label for="title-<%= q._id %>" style="font-family: system-ui; font-size: large;">Title:</label>
-        <input type="text" class="form-control" id="title-<%= q._id %>" name="question_title[]" value="<%= q.question %>">
+      <div class="question-container">
+        <div class="float-right" style="margin-top: -3px;">
+          <button type="button" class="remove-question btn btn-danger btn-sm">
+            <i class="fas fa-minus"></i>&nbsp; Remove
+          </button>
+        </div>
+        <h5 class="question-header" style="letter-spacing: 2px; font-variant: small-caps;">Question <%= i + 1 %></h5>
+
+        <div class="mb-3">
+          <div class="form-group">
+            <label for="title-<%= q._id %>" class="question-title-label">Title:</label>
+            <input type="text" class="form-control question-title" id="title-<%= q._id %>" name="question_title[]" value="<%= q.question %>">
+          </div>
+
+          <div class="form-group">
+            <label for="type-<%= q._id %>" class="question-type-label">Type:</label>
+            <select name="question_type[]" id="type-<%= q._id %>" class="custom-select question-type">
+              <option value="input" <%= q.type === "input" ? "selected" : "" %>>Short answer</option>
+              <option value="textarea" <%= q.type === "textarea" ? "selected" : "" %>>Long answer</option>
+              <option value="radio" <%= q.type === "radio" ? "selected" : "" %>>Multiple choice (select 1)</option>
+              <option value="checkbox" <%= q.type === "checkbox" ? "selected" : "" %>>Multiple choice (select multiple)</option>
+            </select>
+          </div>
+
+          <div class="form-group question-options-container">
+            <label for="options-<%= q._id %>" class="question-options-label">Options (separate different options by semicolon <kbd>;</kbd>):</label>
+            <input type="text" class="form-control question-options" id="options-<%= q._id %>" name="question_options[]" value="<%= q.options.join("; ") %>">
+          </div>
+        </div>
+        <hr class="my-3">
       </div>
 
-      <div class="form-group">
-        <label for="type-<%= q._id %>" style="font-family: system-ui; font-size: large;">Type:</label>
-        <select name="question_type[]" id="type-<%= q._id %>" class="custom-select">
-          <option value="input" <%= q.type === "input" ? "selected" : "" %>>Short answer</option>
-          <option value="textarea" <%= q.type === "textarea" ? "selected" : "" %>>Long answer</option>
-          <option value="radio" <%= q.type === "radio" ? "selected" : "" %>>Multiple choice (select 1)</option>
-          <option value="checkbox" <%= q.type === "checkbox" ? "selected" : "" %>>Multiple choice (select multiple)</option>
-        </select>
-      </div>
-
-      <div class="form-group">
-        <label for="options-<%= q._id %>" style="font-family: system-ui; font-size: large;">Options (multiple choice only; separate different options by semicolon <kbd>;</kbd>):</label>
-        <input type="text" class="form-control" id="options-<%= q._id %>" name="question_options[]" value="<%= q.options.join(";") %>">
-      </div>
-    </div>
-    <hr class="my-3">
-  <% } %>
-
-  <div class="small">
-    <i style="font-family: system-ui; font-size: medium;">Save the survey to add another question. To remove a question, empty the question's title.</i>
+      <% if (!isQuestion) { %>
+        </template>
+      <% } %>
+    <% } %>
   </div>
+
+  <div class="text-right">
+    <button type="button" id="add-question" class="btn btn-primary">
+      <i class="fas fa-plus"></i>&nbsp; Add question
+    </button>
+  </div>
+
+  <hr class="my-3">
 
   <div class="row justify-content-center mt-4">
     <div class="col-auto text-center">
@@ -87,5 +109,7 @@
     </div>
   </div>
 </form>
+
+<script src="/scripts/edit-survey.js" defer></script>
 
 <%- include ../layout/footer %>
