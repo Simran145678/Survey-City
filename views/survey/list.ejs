@@ -15,8 +15,9 @@
 <table class="table table-striped table-hover" style="width: 100%;">
   <thead>
     <tr>
-      <th style="width: 33%;" >Title</th>
+      <th style="width: 22.5%;" >Title</th>
       <th>Description</th>
+      <th style="width: 1px;"></th>
       <th style="width: 1px;"></th>
       <th style="width: 1px;"></th>
       <th style="width: 1px;"></th>
@@ -24,22 +25,29 @@
   </thead>
 
   <tbody>
-    <% for (let i = 0; i < surveys.length; i++) { %>
+    <% for (const survey of surveys) { %>
       <tr>
-        <td class="align-middle"><%= surveys[i].title %></td>
-        <td class="align-middle"><%= surveys[i].description %></td>
+        <td class="align-middle"><%= survey.title %></td>
+        <td class="align-middle">
+          <%= survey.description.length > 255 ? survey.description.slice(0, 255) + "..." : survey.description %>
+        </td>
         <td>
-          <a data-copy="https://survey-city.herokuapp.com/answer/<%= surveys[i]._id %>" class="btn btn-secondary btn-sm text-nowrap">
+          <a data-copy="https://survey-city.herokuapp.com/answer/<%= survey._id %>" class="btn btn-secondary btn-sm text-nowrap">
             <i class="fas fa-copy"></i>&nbsp;Copy link
           </a>
         </td>
         <td>
-          <a href="/survey/<%= surveys[i]._id %>" class="btn btn-primary btn-sm text-nowrap">
+          <a href="/responses/<%= survey._id %>" class="btn btn-secondary btn-sm text-nowrap">
+            <i class="fas fa-list"></i>&nbsp;Responses
+          </a>
+        </td>
+        <td>
+          <a href="/survey/<%= survey._id %>" class="btn btn-primary btn-sm text-nowrap">
             <i class="fas fa-pencil-alt"></i>&nbsp;Edit
           </a>
         </td>
         <td>
-          <a href="/survey/<%= surveys[i]._id %>/delete" class="btn btn-danger btn-sm text-nowrap require-confirmation">
+          <a href="/survey/<%= survey._id %>/delete" class="btn btn-danger btn-sm text-nowrap require-confirmation">
             <i class="fas fa-trash-alt"></i>&nbsp;Delete
           </a>
         </td>
