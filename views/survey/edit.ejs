@@ -68,8 +68,23 @@
           </div>
 
           <div class="form-group question-options-container">
-            <label for="options-<%= q._id %>" class="question-options-label">Options (separate different options by semicolon <kbd>;</kbd>):</label>
-            <input type="text" class="form-control question-options" id="options-<%= q._id %>" name="question_options[]" value="<%= q.options.join("; ") %>">
+            <label>Multiple choice options:</label>
+            <ul class="question-options-list">
+              <% for (const option of q.options) { %>
+                <li>
+                  <input type="text" class="form-control question-option mt-1" value="<%= option %>">
+                </li>
+              <% } %>
+              <% if (q.options.length === 0) { %>
+                <li>
+                  <input type="text" class="form-control question-option mt-1">
+                </li>
+              <% } %>
+              <li class="my-1">
+                <a href="javascript:;" class="question-add-option">+ Add option</a>
+              </li>
+            </ul>
+            <input type="hidden" class="question-options" name="question_options[]" value="<%= q.options.join(";") %>">
           </div>
         </div>
         <hr class="my-3">
