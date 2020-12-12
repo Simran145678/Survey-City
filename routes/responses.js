@@ -24,15 +24,16 @@ router.get("/:surveyId", async function (req, res, next) {
       for (const answer of response.answers) {
         const qId = answer.question.toString();
 
-        if (!result[qId]?.answers?.push?.(answer.answer))
+        if (!result[qId]?.answers?.push?.(answer.answer)) {
+          const q = survey.questions.find(q => q._id.toString() === qId);
           result[qId] = {
-            question:
-              survey.questions.find(q => q._id.toString() === qId)?.question
-                ?? "[Unknown question]",
+            question: q?.question ?? "[Unknown question]",
+            type: q?.type ?? "unknown",
             answers: [
               answer.answer
             ],
           };
+        }
       }
     }
   } catch (e) {
@@ -44,6 +45,7 @@ router.get("/:surveyId", async function (req, res, next) {
     displayName: req.user?.fullName,
     survey,
     answers: Object.values(result),
+    performance: require("perf_hooks").performance,
   });
 });
 
